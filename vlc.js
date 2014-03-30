@@ -4,6 +4,8 @@ var path = require('path');
 var FFI = require('ffi');
 var ref = require('ref');
 
+var VLC_HOME = process.env['VLC_HOME'];
+
 var LIBRARY_PATHS = [];
 
 switch (os.platform()) {
@@ -12,6 +14,9 @@ switch (os.platform()) {
     LIBRARY_PATHS.push(path.join(process.env.HOME, 'Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib'));
     break;
   case 'win32':
+    if (VLC_HOME) {
+      LIBRARY_PATHS.push(path.join('', VLC_HOME, 'libvlc.dll'));
+    }
     if (process.env['ProgramFiles(x86)']) {
       LIBRARY_PATHS.push(path.join('',
         process.env['ProgramFiles(x86)'],
